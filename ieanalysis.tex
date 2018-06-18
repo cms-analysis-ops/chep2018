@@ -5,7 +5,8 @@
 \usepackage{pslatex,palatino,avant,graphicx,color}
 %\usepackage[margin=2cm]{geometry}
 \usepackage[utf8]{inputenc} %direct input of unicide chars
-\usepackage[T2A,T1]{fontenc}
+%% \usepackage[T2A,T1]{fontenc}
+\usepackage[T1]{fontenc}
 %% \usepackage[main=english,bulgarian]{babel}
 \usepackage[main=english]{babel}
 \usepackage{fancyvrb}
@@ -86,8 +87,11 @@
 
 \date{ July 10, 2018}
 \title[Improving efficiency of analysis jobs in CMS | CHEP2018]{Improving efficiency of analysis jobs in CMS. \\}
-\author[Todor Ivanov, University of Sofia ``St. Kliment Ohridski'']{Todor Ivanov on behalf of CRAB Team,\\
-CHEP2018}
+\author[Todor Trendafilov Ivanov, University of Sofia ``St. Kliment Ohridski'']{
+  %%  Todor Trendafilov Ivanov on behalf of CMS CRAB Team,\\
+  %% CHEP2018\\
+  \textbf{Authors:} Stefano Belforte, Matthias Wolf, Todor Trendafilov Ivanov, Marco Mascheroni, Antonio Perez-Calero Yzquierdo, James Letts, Justas Balcas, Anna Elizabeth Woodard, Brian Paul Bockelman, Diego Davila Foyo, Diego Ciangottini, Jose Hernandez Calama, Leonardo Cristella \\
+}
 
 
 \begin{frame}{}
@@ -115,10 +119,85 @@ CHEP2018}
 \end{frame}
 
 
-\section[Problem]{Problem}
-\subsection[Problem]{Problem}
+\section[CMS CRAB \& SI System overview]{CMS CRAB \& SI System overview}
+\subsection[]{}
+\begin{frame}[fragile]{CRAB \& Global Pool \& glideinWMS}
+  -- At most one slide --\\
+\end{frame}
+
+\section[Automating Splitting]{Automating Splitting}
+\subsection[Automating Splitting]{Automating Splitting}
+\begin{frame}[fragile]{Concept}
+  -- One or 2 slides here --\\
+\end{frame}
+
+\section[Automating Tuning]{Automating Tuning}
+
+\subsection[Current Implementation]{Solution}
+
+\begin{frame}[fragile]{JobAutoTuner and CRAB3 Workflow:}
+
+  \begin{columns}
+
+    \begin{column}[T]{7cm}
+      What ever we do we do it at the final step, just before the job submission and after the DAG Expansion - We have to be really fast:
+      \begin{itemize}
+      \item
+        Fast Script execution.
+      \item
+        Fast in gathering of the Condor related information.
+      \item
+        Fast in querying the external information.
+      \item
+        Fast in taking the decisions.
+      \item
+        Fast in applying it - editing the jobs.
+      \end{itemize}
+      Alternative solution - keep jobs in hold while measuring (Potential enormous delay in submission time).
+    \end{column}
+
+    \begin{column}[T]{5cm}
+      {\shadowbox{\includegraphics[width=4.5cm]{CRAB3_architecture_simple_JAT}}}
+    \end{column}
+  \end{columns}
+
+\end{frame}
+
+\subsection[Automating Time Tuning]{Automating Time Tuning}
+\begin{frame}[fragile]{Concept \&\& differences from Automatic Splitting}
+  \begin{columns}
+
+    \begin{column}[T]{4cm}
+      -- one slide --\\
+      -- + showing how EWT perJOB progress in time - well defined task + pathological cases. --\\
+      -- this one may simply be united with the previous slide -- \\
+      -- the image in the current slide is just for scale testing.
+    \end{column}
+
+    \begin{column}[T]{6cm}
+      {\shadowbox{\includegraphics[width=6cm]{CRAB3_Auxiliary-RemoteWallClockTime_by_CRAB_SplitAlgo}}}
+    \end{column}
+
+  \end{columns}
+
+\end{frame}
 
 
+\begin{frame}[fragile]{Current implementation of Time tuning}
+  -- one slide explaining the whole machinery --  \\
+\end{frame}
+
+
+\begin{frame}[fragile]{Current results}
+  -- Few plots showing the results from the latest implementation --\\
+\end{frame}
+
+\begin{frame}[fragile]{New Methods for improving the accuracy of the current estimation}
+  -- One slide showing that there is great motivation and opportunity to apply multivariate analysis and ML for improving the accuracy of the method. --\\
+  -- And that the proper hooks in the current code are already prepared for such next step. (we may even mention that this is a work in progress or a field yet to be explored) --\\
+\end{frame}
+
+\subsection[Overflow]{Overflow}
 \begin{frame}[fragile]{Problem:}
 
   \begin{itemize}
@@ -143,9 +222,7 @@ CHEP2018}
 \end{frame}
 
 
-\section[Solution]{Solution}
-\subsection[Proposed Solution]{Proposed Solution}
-
+%% \subsection[Proposed Solution]{Proposed Solution}
 \begin{frame}[fragile]{Proposed Solution: }
   A solution based on the condor JobRouter mechanism to edit jobs in place.\\
   \textbf{Challenges:}
@@ -177,8 +254,9 @@ CHEP2018}
 \end{frame}
 
 
-\subsection[History]{History}
+%% \subsection[History]{History}
 \begin{frame}[fragile]{History - TimeTuner:}
+  -- This slide must be revisited and if there is something left out of it to be shifted in the Time Tuning section --\\
   The first attempt to exploit the CondorJobRouter machinery.\\
   It definitely works fine - it scales and is doing what it is expected to do.\\
   \textbf{What kind of problems did we face:}
@@ -211,36 +289,6 @@ CHEP2018}
     Facing the Tier1 problem - Critical for us. In the current situation of the negotiation order Analysis jobs cannot
     run on the Tier1 sites but there are datasets that are currently placed only at T1.
   \end{itemize}
-\end{frame}
-
-\subsection[Current Implementation]{Solution}
-
-\begin{frame}[fragile]{JobAutoTuner and CRAB3 Workflow:}
-
-  \begin{columns}
-
-    \begin{column}[T]{7cm}
-      What ever we do we do it at the final step, just before the job submission and after the DAG Expansion - We have to be really fast:
-      \begin{itemize}
-      \item
-        Fast Script execution.
-      \item
-        Fast in gathering of the Condor related information.
-      \item
-        Fast in querying the external information.
-      \item
-        Fast in taking the decisions.
-      \item
-        Fast in applying it - editing the jobs.
-      \end{itemize}
-      Alternative solution - keep jobs in hold while measuring (Potential enormous delay in submission time).
-    \end{column}
-
-    \begin{column}[T]{5cm}
-      {\shadowbox{\includegraphics[width=4.5cm]{CRAB3_architecture_simple_JAT}}}
-    \end{column}
-  \end{columns}
-
 \end{frame}
 
 \begin{frame}[fragile]{Structure:}
@@ -316,7 +364,6 @@ CHEP2018}
 \end{frame}
 
 
-
 \begin{frame}[shrink]{Limits \& Protect ourselves}
   \textbf{Limitations - where and how can be implemented:}\\
   We do not want to shoot ourselves in the thumb - so we need to have more options than just maximum overflow.\\
@@ -350,7 +397,6 @@ CHEP2018}
         \end{itemize}
   \end{itemize}
 \end{frame}
-
 
 
 \begin{frame}[fragile]{Current Status:}
@@ -420,6 +466,11 @@ CHEP2018}
 
 \end{frame}
 
+\subsection[Conclusion \& Future plans - Automatic Memory Tuning]{Conclusion \& Future plans}
+\begin{frame}
+  -- to list the future plan for improving the current implementation  (if we decide to have a section with 'future plans') --\\
+  -- to mention Automatic Memory Tuning as a candidate area for future research --\\
+\end{frame}
 
 %% \begin{frame}[fragile]{Quantitative Results}
 %%   pass
@@ -430,9 +481,4 @@ CHEP2018}
 %% \end{frame}
 
 \end{document}
-
-
-
-
-
 
