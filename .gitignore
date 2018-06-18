@@ -1,0 +1,12 @@
+*~
+*.aux
+*.log
+*.nav
+*.out
+*.snm
+*.toc
+*.vrb
+overflow.d.orig
+overflow.d.orig/*
+doclinks.txt
+
